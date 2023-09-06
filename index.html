@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>javascript assessment</title>
+  </head>
+  <body>
+    <script>
+      //     1. Write a program that takes an array of elements and counts the occurrences of each
+      // element using a Map.
+      // Sample Input: const arr = [1, 2, 3, 2, 1, 4, 5, 4];
+      // Sample Output: Map(5) {
+      // 1 =&gt; 2,
+      // 2 =&gt; 2,
+      // 3 =&gt; 1,
+      // 4 =&gt; 2,
+      // 5 =&gt; 1
+      // }
+      function countOccurrences(arr) {
+        const occurrenceMap = new Map();
+
+        // Loop through the array
+        for (const element of arr) {
+          // If the element is already in the Map, increment its count by 1
+          if (occurrenceMap.has(element)) {
+            occurrenceMap.set(element, occurrenceMap.get(element) + 1);
+          } else {
+            // If the element is not in the Map, initialize its count to 1
+            occurrenceMap.set(element, 1);
+          }
+        }
+
+        return occurrenceMap;
+      }
+
+      const arr = [1, 2, 3, 2, 1, 4, 5, 4];
+      const result = countOccurrences(arr);
+
+      console.log(result);
+
+      // 2. Write a program that takes an array of integers and a target sum. Check if there exists a
+      // subarray with the given sum using a Set.
+      // Sample Input: const arr = [1, 4, 20, 3, 10, 5];
+      // const targetSum = 33;
+      // Sample Output: true
+      function hasSubarrayWithSum(arr, targetSum) {
+        const seen = new Set();
+        let currentSum = 0;
+
+        for (const num of arr) {
+          currentSum += num;
+
+          // Check if the currentSum minus targetSum exists in the Set
+          if (seen.has(currentSum - targetSum)) {
+            return true;
+          }
+
+          // Add the currentSum to the Set
+          seen.add(currentSum);
+        }
+
+        return false;
+      }
+
+      const arr = [1, 4, 20, 3, 10, 5];
+      const targetSum = 33;
+      const result = hasSubarrayWithSum(arr, targetSum);
+
+      console.log(result);
+
+      // 3. Write a program that takes an array of strings and groups anagrams together using a
+      // Map.
+      // Sample Input: const arr = [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;];
+      // const chunkSize = 3;
+      // Sample Output: Map(3) {
+      // &quot;aet&quot; =&gt; [&quot;eat&quot;, &quot;tea&quot;, &quot;ate&quot;],
+      // &quot;ant&quot; =&gt; [&quot;tan&quot;, &quot;nat&quot;],
+      // &quot;abt&quot; =&gt; [&quot;bat&quot;]
+      // }
+      function groupAnagrams(arr) {
+        const anagramMap = new Map();
+
+        for (const word of arr) {
+          // Sort the characters in the word and use it as a key
+          const sortedWord = word.split("").sort().join("");
+
+          if (anagramMap.has(sortedWord)) {
+            // If the key already exists in the Map, push the word to its array
+            anagramMap.get(sortedWord).push(word);
+          } else {
+            // If the key doesn't exist, create a new array with the word as the first element
+            anagramMap.set(sortedWord, [word]);
+          }
+        }
+
+        return anagramMap;
+      }
+
+      const arr = ["eat", "tea", "tan", "ate", "nat", "bat"];
+      const result = groupAnagrams(arr);
+
+      console.log(result);
+
+      // 4. Write a program that takes an array of strings and reverses each string in the array using
+      // the array methods.
+      // Sample Input: const arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;];
+      // Sample Output: [&quot;elppa&quot;, &quot;ananab&quot;, &quot;egnaro&quot;]
+      const arr = ["apple", "banana", "orange"];
+
+      const reversedArray = arr.map((str) => str.split("").reverse().join(""));
+
+      console.log(reversedArray);
+
+      // 5. Write a program that takes an array of numbers and filters out the perfect square numbers
+      // using the array methods.
+      // Sample Input const arr = [1, 2, 4, 7, 9, 16, 25];
+      // Sample Output: [1, 4, 9, 16, 25]
+      const arr = [1, 2, 4, 7, 9, 16, 25];
+
+      const perfectSquares = arr.filter((num) => {
+        // Check if the square root of the number is an integer
+        const sqrt = Math.sqrt(num);
+        return sqrt === Math.floor(sqrt);
+      });
+
+      console.log(perfectSquares);
+
+      // 6. Write a program that takes two objects and merges them into a single object
+      // Sample Input: const obj1 = { name: &quot;John&quot;, age: 30 };
+      // const obj2 = { city: &quot;New York&quot;, occupation: &quot;Engineer&quot; };
+      // Sample Output: {
+      // name: &quot;John&quot;,
+      // age: 30,
+      // city: &quot;New York&quot;,
+      // occupation: &quot;Engineer&quot;
+      // }
+      const obj1 = { name: "John", age: 30 };
+      const obj2 = { city: "New York", occupation: "Engineer" };
+
+      const mergedObject = { ...obj1, ...obj2 };
+
+      console.log(mergedObject);
+
+      // 7 Write a program that takes an array of objects and converts it into a single object using
+      // Object.assign() and Object.entries().
+      // Sample Input: const arr = [
+      // { key: &quot;name&quot;, value: &quot;John&quot; },
+      // { key: &quot;age&quot;, value: 30 },
+      // { key: &quot;city&quot;, value: &quot;New York&quot; }
+      // ];
+      // Sample Output: { name: &quot;John&quot;, age: 30, city: &quot;New York&quot; }
+      const arr = [
+        { key: "name", value: "John" },
+        { key: "age", value: 30 },
+        { key: "city", value: "New York" },
+      ];
+
+      const mergedObject = Object.assign(
+        {},
+        ...arr.map((item) => ({ [item.key]: item.value }))
+      );
+
+      console.log(mergedObject);
+
+      // 8. Write a program that takes a function with an array parameter and destructure the array
+      // inside the function.
+      // Sample Input:
+      // function displayArray([first, second, ...rest]) {
+      // console.log(`First Element: ${first}`);
+      // console.log(`Second Element: ${second}`);
+      // console.log(`Rest Elements: ${rest}`);
+
+      // }
+      // const arr = [1, 2, 3, 4, 5];
+      // Sample Output:
+      // First Element: 1
+      // Second Element: 2
+      // Rest Elements: 3,4,5
+      function displayArray([first, second, ...rest]) {
+        console.log(`First Element: ${first}`);
+        console.log(`Second Element: ${second}`);
+        console.log(`Rest Elements: ${rest}`);
+      }
+
+      const arr = [1, 2, 3, 4, 5];
+      displayArray(arr);
+
+      // 9. Write a program that takes a nested object containing numeric values and calculates the
+      // sum of all values.
+      // Sample Input:
+      // const nestedObj = {
+      // a: 1,
+      // b: 2,
+      // c: { d: 3, e: { f: 4 } },
+      // };
+      // Sample Output: Sum: 10
+      function calculateSum(obj) {
+        let sum = 0;
+
+        for (const key in obj) {
+          if (typeof obj[key] === "number") {
+            sum += obj[key];
+          } else if (typeof obj[key] === "object") {
+            sum += calculateSum(obj[key]);
+          }
+        }
+
+        return sum;
+      }
+
+      const nestedObj = {
+        a: 1,
+        b: 2,
+        c: { d: 3, e: { f: 4 } },
+      };
+
+      const totalSum = calculateSum(nestedObj);
+
+      console.log(`Sum: ${totalSum}`);
+
+      // 10. Write a program that takes an object and counts the occurrences of each property
+      // Sample Input: const obj = { name: &quot;John&quot;, age: 30, city: &quot;New York&quot;, profession: &quot;Engineer&quot; };
+      // Sample Output: {
+      // name: 1,
+      // age: 1,
+      // city: 1,
+      // profession: 1,
+      // }
+      function countProperties(obj) {
+        const propertyCount = {};
+
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (propertyCount.hasOwnProperty(key)) {
+              propertyCount[key] += 1;
+            } else {
+              propertyCount[key] = 1;
+            }
+          }
+        }
+
+        return propertyCount;
+      }
+
+      const obj = {
+        name: "John",
+        age: 30,
+        city: "New York",
+        profession: "Engineer",
+      };
+
+      const result = countProperties(obj);
+
+      console.log(result);
+
+      // SET - 2
+
+      // 11. Write a program that takes two arrays and finds their intersection using Sets.
+      // Sample Input: const arr1 = [1, 2, 3, 4, 5];
+      // const arr2 = [3, 4, 5, 6, 7];
+      // Sample Output: [3, 4, 5]
+      function findIntersection(arr1, arr2) {
+        const set1 = new Set(arr1);
+        const set2 = new Set(arr2);
+        const intersection = [];
+
+        for (const value of set1) {
+          if (set2.has(value)) {
+            intersection.push(value);
+          }
+        }
+
+        return intersection;
+      }
+
+      const arr1 = [1, 2, 3, 4, 5];
+      const arr2 = [3, 4, 5, 6, 7];
+
+      const result = findIntersection(arr1, arr2);
+
+      console.log(result);
+
+      // 12 Write a program that takes an array containing nested arrays and flattens it into a single
+      // array using the array methods.
+      // Sample Input: const arr = [1, [2, 3], [4, 5, [6, 7]]];
+      // Sample Output: [1, 2, 3, 4, 5, 6, 7]
+      const arr = [1, [2, 3], [4, 5, [6, 7]]];
+      const flattenedArray = arr.flat(Infinity);
+
+      console.log(flattenedArray);
+
+      // 13 Write a program that takes an array containing both truthy and falsy values and removes
+      // the falsy values using the array methods.
+      // Sample Input: const arr = [0, &quot;hello&quot;, &quot;&quot;, 42, false, &quot;world&quot;, null, true, undefined];
+      // Sample Output: [&quot;hello&quot;, 42, &quot;world&quot;, true]
+      const arr = [0, "hello", "", 42, false, "world", null, true, undefined];
+      const filteredArray = arr.filter(Boolean);
+
+      console.log(filteredArray);
+
+      // 14. Write a program that takes an array of numbers and returns an array with only the unique
+      // elements without using the array methods.
+      // Sample Input: const arr = [1, 2, 2, 3, 4, 4, 5];
+      // Sample Output: [1, 2, 3, 4, 5]
+      function removeDuplicates(arr) {
+        const uniqueArray = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (uniqueArray.indexOf(arr[i]) === -1) {
+            uniqueArray.push(arr[i]);
+          }
+        }
+
+        return uniqueArray;
+      }
+
+      const arr = [1, 2, 2, 3, 4, 4, 5];
+      const uniqueArray = removeDuplicates(arr);
+
+      console.log(uniqueArray);
+
+      // 15. Write a program that takes an array of numbers and filters out the prime numbers using
+      // the array methods.
+      // Sample Input: const arr = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+      // Sample Output: [2, 3, 5, 7]
+      function isPrime(num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 === 0 || num % 3 === 0) return false;
+
+        for (let i = 5; i * i <= num; i += 6) {
+          if (num % i === 0 || num % (i + 2) === 0) return false;
+        }
+
+        return true;
+      }
+
+      const arr = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const primeNumbers = arr.filter(isPrime);
+
+      console.log(primeNumbers);
+
+      // 16. Write a program that takes an object and checks if a specific property exists
+      // Sample Input: const obj = { name: &quot;John&quot;, age: 30, city: &quot;New York&quot; };
+      // const propertyName = &quot;age&quot;;
+      // Sample Output: Property &quot;age&quot; exists: true
+      const obj = { name: "John", age: 30, city: "New York" };
+      const propertyName = "age";
+
+      const propertyExists = obj.hasOwnProperty(propertyName);
+
+      console.log(`Property "${propertyName}" exists: ${propertyExists}`);
+
+      // 17. Write a program that takes an object containing some properties with undefined values
+      // and removes those properties
+      // Sample Input: const obj = { name: &quot;John&quot;, age: undefined, city: &quot;New York&quot; };
+      // Sample Output: { name: &quot;John&quot;, city: &quot;New York&quot; }
+      const obj = { name: "John", age: undefined, city: "New York" };
+
+      for (const key in obj) {
+        if (obj[key] === undefined) {
+          delete obj[key];
+        }
+      }
+
+      console.log(obj);
+
+      // 18. Write a program that takes an array containing nested arrays and destructures specific
+      // elements from the nested arrays.
+      // Sample Input const arr = [[1, 2], [3, 4, 5], [6, 7, 8, 9]];
+      // Sample Output: First Element of Nested Array: 1
+      // Second Element of Nested Array: 4
+      // Third Element of Nested Array:
+      const arr = [
+        [1, 2],
+        [3, 4, 5],
+        [6, 7, 8, 9],
+      ];
+
+      for (const nestedArray of arr) {
+        const [firstElement, secondElement, thirdElement] = nestedArray;
+
+        console.log(`First Element of Nested Array: ${firstElement}`);
+        console.log(`Second Element of Nested Array: ${secondElement}`);
+        console.log(`Third Element of Nested Array: ${thirdElement}`);
+      }
+
+      // 19. Write a program that takes an object and extracts properties with renamed variables
+      // using destructuring assignment.
+      // Sample Input: const user = { name: &quot;John&quot;, age: 30 };
+      // Sample Output: User Name: John
+      // User Age: 30
+      const user = { name: "John", age: 30 };
+
+      const { name: userName, age: userAge } = user;
+
+      console.log(`User Name: ${userName}`);
+      console.log(`User Age: ${userAge}`);
+
+      // 20. Write a program that takes a function with an object parameter and provides default
+      // values for missing properties using destructuring assignment.
+      // Sample Input:
+      // function displayInfo({ name = &quot;Anonymous&quot;, age = 25 }) {
+      // console.log(`Name: ${name}`);
+      // console.log(`Age: ${age}`);
+      // }
+      // const obj = { name: &quot;John&quot; };
+      // Sample Output:
+      // Name: John
+      // Age: 25
+
+      function displayInfo({ name = "Anonymous", age = 25 }) {
+        console.log(`Name: ${name}`);
+        console.log(`Age: ${age}`);
+      }
+
+      const obj = { name: "John" };
+
+      displayInfo(obj);
+    </script>
+  </body>
+</html>
